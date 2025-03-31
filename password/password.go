@@ -2,6 +2,7 @@ package password
 
 import (
 	"fmt"
+	"sync"
 	"time"
 )
 
@@ -11,6 +12,23 @@ import (
 func main() {
 	binaryFindPass()
 	findForLoops()
+}
+
+func main2() {
+	var wg sync.WaitGroup
+
+	wg.Add(2)
+	go func() {
+		defer wg.Done()
+		binaryFindPass()
+	}()
+
+	go func() {
+		defer wg.Done()
+		findForLoops()
+	}()
+
+	wg.Wait()
 }
 
 func binaryFindPass() {
